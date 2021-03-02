@@ -88,8 +88,6 @@ const confirm = async message => {
 }
 
 module.exports = {
-	showListCheckList,
-	listTasksDelete,
 	inquireMenu,
 	pauseMenu,
 	readInput,
