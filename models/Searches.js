@@ -16,10 +16,18 @@ class Searches {
     }
   }
 
+  get paramsOpenWeather() {
+    return {
+      appid: process.env.OPENWEATHER_KEY,
+      units: "metric",
+      lang: "es"
+    }
+  }
+
   async city(place = '') {
 
     try {
-      // Petición http
+
       const instance = axios.create({
         baseURL: `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURI(place)}.json`,
         params: this.paramsMapbox
@@ -40,13 +48,34 @@ class Searches {
 
     }
 
-
-    // await fetch('https://google.com');
-
-    // regresar los lugares
-
   }
 
+  async climatePlace(lat, lon) {
+
+    try {
+
+      const instance = axios.create({
+        baseURL: `https://api.openweathermap.org/data/2.5/weather`,
+        params: { ...this.paramsOpenWeather, lat, lon }
+      });
+
+      const resp = await instance();
+      const { weather, main } = resp.data;
+
+      return {
+        desc: weather[0].description,
+        temp: main.temp,
+        min: main.temp_min,
+        max: main.temp_max
+      }
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
+
+  }
 
 }
 
