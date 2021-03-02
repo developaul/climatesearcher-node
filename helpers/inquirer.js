@@ -72,6 +72,39 @@ const readInput = async message => {
 	return desc;
 }
 
+const listPlaces = async (places = []) => {
+
+	const choices = places.map(({ id, name }, i) => {
+
+		const idx = `${`${i + 1}.`.green}`;
+
+		return {
+			value: id,
+			name: `${idx} ${name}`
+		}
+
+	});
+
+	const questions = [
+		{
+			type: 'list',
+			name: 'id',
+			message: 'Seleccione un lugar',
+			choices: [
+				{
+					value: '0',
+					name: `${'0.'.green} Cancelar`
+				},
+				...choices
+			]
+		}
+	];
+
+	const { id } = await inquirer.prompt(questions);
+
+	return id;
+}
+
 const confirm = async message => {
 
 	const question = [
@@ -89,6 +122,7 @@ const confirm = async message => {
 
 module.exports = {
 	inquireMenu,
+	listPlaces,
 	pauseMenu,
 	readInput,
 	confirm,

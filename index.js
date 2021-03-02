@@ -1,8 +1,9 @@
 const Searches = require("./models/Searches");
 
 const {
-  pauseMenu,
   inquireMenu,
+  listPlaces,
+  pauseMenu,
   readInput
 } = require("./helpers/inquirer");
 
@@ -22,18 +23,22 @@ const main = async () => {
       case 1:
         // readInput
         const place = await readInput('Ciudad:');
-        await searches.city(place);
+
         // Search places
+        const places = await searches.city(place);
 
         // Select place
+        const idSelected = await listPlaces(places);
+        const { name, lng, lat } = places.find(p => p.id === idSelected);
 
         // data clima
 
+
         // show results
         console.log('\nInformación de la cidad\n'.green);
-        console.log('Ciudad:');
-        console.log('Lat:',);
-        console.log('Lng:',);
+        console.log('Ciudad:', name);
+        console.log('Lat:', lat);
+        console.log('Lng:', lng);
         console.log('Temperatura:',);
         console.log('Mínima:',);
         console.log('Máxima:',);
