@@ -6,6 +6,8 @@ const {
   readInput
 } = require("./helpers/inquirer");
 
+require('dotenv').config();
+
 const main = async () => {
 
   let opt;
