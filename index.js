@@ -29,7 +29,11 @@ const main = async () => {
 
         // Select place
         const idSelected = await listPlaces(places);
+        if (idSelected === '0') continue;
         const { name, lng, lat } = places.find(p => p.id === idSelected);
+
+        // Save DB
+        searches.addHistory(name);
 
         // data clima
         const { desc, temp, min, max } = await searches.climatePlace(lat, lng);
@@ -46,6 +50,10 @@ const main = async () => {
         console.log('Como esta el clima:', desc.green);
         break;
       case 2:
+        searches.recordCapitalize.forEach((place, i) => {
+          const idx = `${i + 1}.`.green;
+          console.log(`${idx} ${place}`);
+        });
         break;
     }
 
